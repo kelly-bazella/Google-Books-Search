@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Route
+const apiRoutes= require("./routes/apiRoutes")
 
 const PORT = process.env.PORT || 8000
 
