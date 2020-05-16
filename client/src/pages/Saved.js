@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 function Saved(){
     return(
         <div className="saved">
-        <h1>Saved</h1>
+        <h1>Saved Books</h1>
         </div>
     
     )

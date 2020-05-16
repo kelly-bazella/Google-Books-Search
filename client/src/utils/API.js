@@ -1,17 +1,18 @@
 import axios from "axios";
-
-// const baseURL ="https://www.googleapis.com/books/v1/volumes?q="+{query}+"&key="
-// const apiKey = "AIzaSyD5Ze8DbXCkQxPs-zIAGPZFkt-ILAQtikk";
+import config from "../config"
 
 
-// export default{
-//     searchBooks: function(query){
-//         return axios.get(baseURL + apiKey)
-//     }
-// };
+const baseURL ="https://www.googleapis.com/books/v1/volumes?q=";
+const apiKey = config.apiKey;
 
-export default {
-    getBooks: function(query) {
-      return axios.get("/api/books", { params: { q: query } });
+export default{
+    searchBooks: function(query){
+        return axios.get(baseURL + query + "&key=" + apiKey)
     }
-  };
+};
+
+// export default {
+//     getBooks: function(query) {
+//       return axios.get("/api/books", { params: { q: query } });
+//     }
+//   };
