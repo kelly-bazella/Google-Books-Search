@@ -1,19 +1,20 @@
 import React from "react";
-import BookCard from "./BookCard";
+import BookCard from "../BookCard";
 
 const BookList = ({books, saveBook}) => {
   return(
     <div className="booklist">
       {books.map((book) => {
         return(
-          <div>
+          <div key={book.googleId}>
             <BookCard 
-            key={book.id}
-            id={book.id}
-            image={book.volumeInfo.imageLinks.thumbnail}
-            title={book.volumeInfo.title}
-            author={book.volumeInfo.author}
-            description={book.volumeInfo.description}
+            key={book.googleId}
+            id={book.googleId}
+            thumbnail={book.thumbnail}
+            title={book.title}
+            author={book.author}
+            href={book.href}
+            description={book.description}
             saveBook={saveBook}
             />
           </div>

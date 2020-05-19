@@ -1,57 +1,85 @@
-import React, {Component, useState} from "react";
+import React, { Component } from "react";
 import { Container, Row, Col } from "../components/Grid";
 import Input from "../components/Input";
-import Button from "../components/Button/index"
-//import { BookList, BookListItem } from "./components/BookList";
+import BookList from "../components/BookList";
 import API from "../utils/API";
 
+class Search extends Component {
 
+  state = {
+    books:[],
+    bookSearch:"",
+    savedBooks:[],
+  };
 
-function Search() {
-  //const [books, setBooks] = useState([]);
-const [bookSearch, setBookSearch] = useState([]);
+  handleInputChange = (event) => {
+    const { value } = event.target;
+    this.setState({bookSearch:value})
+   // setBookSearch(value);
+   console.log(value)
+  };
 
-const handleInputChange = (event) => {
-  const { value } = event.target;
-  setBookSearch(value);
-};
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    API.searchBooks(this.state.bookSearch)
+      .then((res) => {
+        const bookList = res.data.items.map(book => {
+          
+          const { id,volumeInfo } = book
+          const myObj = {
+            googleId: id,
+            title: volumeInfo.title,
+            author: volumeInfo.authors[0],
+            description: volumeInfo.description,
+            href: volumeInfo.canonicalVolumeLink,
+            thumbnail: volumeInfo.imageLinks.thumbnail
+          }
+          return(myObj)
+        })
+        this.setState({books:bookList})
+          console.log(this.state.books);
+          // setBookSearch(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
-const handleFormSubmit = (event) => {
-  event.preventDefault();
-  API.searchBooks(bookSearch)
-    .then((res) => {
-      console.log(res.data);
-      setBookSearch(res.data);
+  handleSave=(event, googleId, title, author, description, href, thumbnail) => {
+    event.preventDefault();
+   API.saveBook({googleId, title, author, description, href, thumbnail}).then (res => this.loadSavedBooks)
+  }
+
+  loadSavedBooks = () => {
+    API.getSavedBooks().then(res => {
+      this.setState({savedBooks: res.data});
     })
-    .catch((err) => console.log(err));
-};
-  return (
-    <div className="search">
-      <form>
+  }
+
+  render(){
+    return (
+      <div className="search">
         <Container>
           <Row>
-            <Col size="xs-9 sm-10">
+            <Col size="xs-12 sm-12">
               <Input
                 name="bookSearch"
-              value={bookSearch}
-              onChange={handleInputChange}
+                value={this.state.bookSearch}
+                onChange={this.handleInputChange}
                 placeholder="Search for a Book..."
+                onSubmit={this.handleFormSubmit}
               />
             </Col>
-            <Col size="xs-3 sm-2">
-              <Button
-              onClick={handleFormSubmit}
-                type="success"
-                className="input-lg"
-              >
-                Search
-              </Button>
-            </Col>
+          </Row>
+          <Row>
+            <BookList 
+            books = {this.state.books}
+            saveBook = {this.saveBook}
+            />
           </Row>
         </Container>
-      </form>
-    </div>
-  );
+      </div>
+    );
+  }
+
 }
 
 export default Search;

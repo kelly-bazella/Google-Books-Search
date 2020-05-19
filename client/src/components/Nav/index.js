@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import {Link} from 'react-router-dom';
 import "./style.css";
 
@@ -13,7 +13,6 @@ function Nav() {
         <ul className="navbar-nav">
          <li className="nav-item active " style={{marginRight:"10px"}}> 
          <Link to="/">Search 
-         {/* <span className="sr-only">(current)</span> */}
          </Link> 
           </li>
           <li className="nav-item">

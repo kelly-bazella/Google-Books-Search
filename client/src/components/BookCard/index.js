@@ -1,21 +1,24 @@
 import React from "react";
 
-const BookCard = ({image, title, author, description, id, saveBook}) => {
-    return(
-        <div className="bookcard">
-            <div className="card-container">
-                <img src={image} alt="title" />
-                <div className="desc">
-                    <h1>{title}</h1>
-                    <h2>{author}</h2>
-                    <p>{description}</p>
-                </div>
+const BookCard = ({ thumbnail, title, author, href, description, id, saveBook }) => {
+  return (
+    <div className="bookcard">
+        <div className="card-container">
+            <br />
+            <img src={thumbnail} alt="title" />
+            <div className="desc">
+                <h3>{title}</h3>
+                <h4>{author}</h4>
+                <p>{description}</p>
+                <a href={href}>Learn More</a>
             </div>
-            <button onClick={() => saveBook(id)}>
-            Save Book
-            </button>
+    <button className="btn" onClick={() => saveBook(id)}>
+    Save Book
+  </button>
         </div>
-    );
-}
+    </div>
+
+  );
+};
 
 export default BookCard;

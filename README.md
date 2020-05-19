@@ -1,7 +1,6 @@
 # Google-Books-Search
 
 ## User Story
-
 ```
 AS a book lover
 I WANT to search for books 
